@@ -1,29 +1,24 @@
 version: '3'
 services:
-  mariadb:
-    image: image_mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: dbname
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
-    volumes:
-      - db-data:/var/lib/mysql
-    networks:
-      - app-network
-  
+
   python:
     image: image_python
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: python main.py
+    ports:
+      - '8080:80'
+    networks: monreseau
     depends_on:
-      - db
-    networks:
-      - app-network
+      - image_mariadb
 
-volumes:
-  db-data:
+  mariadb:
+    image: image_mariadb
+    ports:
+      - '7080:7080'
+    networks: monreseau
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: parc_informatique
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ''
+
 networks:
-  app-network:
+  monreseau:
