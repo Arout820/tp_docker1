@@ -1,19 +1,18 @@
 version: '3'
 services:
-
   python:
-    image: image_python
+    image: image_app
     ports:
       - '8080:80'
-    networks: monreseau
-    depends_on:
-      - image_mariadb
+    networks:
+      - monreseau
 
   mariadb:
-    image: image_mariadb
+    image: image_database
     ports:
-      - '7080:7080'
-    networks: monreseau
+      - '7080:80'
+    networks:
+      - monreseau
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: parc_informatique
